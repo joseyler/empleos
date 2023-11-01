@@ -1,12 +1,7 @@
 "use client";
-import { useState } from "react";
 import "./Card.css";
 export const Card = (props: any) => {
   const { titulo, postulacionClicked, postulado } = props;
-  const [btnPostulacion, setBtnPostulacion] = useState<string>(
-    postulado ? "despostular" : "postular"
-  );
-  // const [sePostulo, setSePostulo] = useState<boolean>(false);
 
   /*   const postular = (titulo: string) => {
     if (!sePostulo) {
@@ -26,7 +21,7 @@ export const Card = (props: any) => {
     if (sePostulo) {
       setBtnPostulacion("despostular");
     } else {
-      setBtnPostulacion("POSTULAR");
+      setBtnPostulacion("POSTULAR");{postulado && <CantidadTomados />}
     }
   }, [sePostulo]); */
 
@@ -35,12 +30,12 @@ export const Card = (props: any) => {
       <h2>{titulo}</h2>
       <hr />
       <button
-        className="btn btn-info"
+        className={`btn ${postulado ? "btn-danger" : "btn-success"}`}
         key={titulo}
         // onClick={(event) => postularAEmpleo(event)}
         onClick={() => postulacionClicked(titulo)}
       >
-        {btnPostulacion}
+        {postulado ? "despostular" : "postular"}
       </button>
       {/* {postulado && <CantidadTomados />} */}
     </div>

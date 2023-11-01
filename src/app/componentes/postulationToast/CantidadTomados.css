@@ -1,0 +1,17 @@
+.container-toast {
+    background-color:  #c6c2c2c7;
+    position: absolute;
+    width:100%;
+    height: 100vh;
+    filter: blur(4px);
+    top:0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+  }
+
+.container-toast-warning {
+  background-color: red;
+    margin: 10px;
+    padding: 20px;
+  }

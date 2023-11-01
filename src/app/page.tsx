@@ -11,7 +11,7 @@ export default function Home() {
   const [jobsTomados, setJobsTomados] = useState<string[]>([]);
   const [remanentes, setRemanentes] = useState(0);
   const [cantTomados, setCantTomados] = useState(0);
-
+  const [misEmpleos, setMisEmpleos] = useState(true);
   const postulacion = (titulo: string) => {
     const newJobs = jobs.filter((job) => job != titulo);
     setJobs(newJobs);
@@ -26,6 +26,14 @@ export default function Home() {
     // });
     // tomados.push(titulo);
     setJobsTomados(tomados);
+  };
+
+  const despostular = (titulo: string) => {
+    const newPostulados = jobsTomados.filter((job) => job != titulo);
+    setJobsTomados(newPostulados);
+
+    const libres: string[] = [...jobs, titulo];
+    setJobs(libres);
   };
 
   const resetPostulaciones = () => {
@@ -58,49 +66,55 @@ export default function Home() {
     <>
       <Encabezado />
       <main>
-        <div className="d-flex flex-row">
-          <BarraLateral menu={options} />
-          <div>
-            <CardContainer>
-              <h3>Postulaciones Disponibles</h3>
-              <div className="d-flex flex-row justify-content-evenly">
-                {jobs.map((job: string) => (
-                  <Card
-                    titulo={job}
-                    key={`jobItem${job}`}
-                    postulacionClicked={(titulo: string) => postulacion(titulo)}
-                    /* postulado={false} */
-                  />
-                ))}
-              </div>
-            </CardContainer>
-            <CardContainer>
-              Quedan disponibles {remanentes} postulaciones
-              <br />
-              Cantidad postulaciones {cantTomados} realizadas
-              <br />
-              <button
-                className="btn btn-secondary"
-                onClick={() => resetPostulaciones()}
-              >
-                Cancelar
-              </button>
-            </CardContainer>
-            <CardContainer>
-              <h3>Postulaciones Tomadas</h3>
-              <div className="d-flex flex-row justify-content-evenly">
-                {jobsTomados.map((job: string) => (
-                  <Card
-                    titulo={job}
-                    key={`jobItem${job}`}
-                    postulacionClicked={(titulo: string) => postulacion(titulo)}
-                    /* postulado={true} */
-                  />
-                ))}
-              </div>
-            </CardContainer>
+        {misEmpleos && (
+          <div className="d-flex flex-row">
+            <BarraLateral menu={options} />
+            <div>
+              <CardContainer>
+                <h3>Postulaciones Disponibles</h3>
+                <div className="d-flex flex-row justify-content-evenly">
+                  {jobs.map((job: string) => (
+                    <Card
+                      titulo={job}
+                      key={`jobItem${job}`}
+                      postulacionClicked={(titulo: string) =>
+                        postulacion(titulo)
+                      }
+                      postulado={false}
+                    />
+                  ))}
+                </div>
+              </CardContainer>
+              <CardContainer>
+                Quedan disponibles {remanentes} postulaciones
+                <br />
+                Cantidad postulaciones {cantTomados} realizadas
+                <br />
+                <button
+                  className="btn btn-secondary"
+                  onClick={() => resetPostulaciones()}
+                >
+                  Cancelar
+                </button>
+              </CardContainer>
+              <CardContainer>
+                <h3>Postulaciones Tomadas</h3>
+                <div className="d-flex flex-row justify-content-evenly">
+                  {jobsTomados.map((job: string) => (
+                    <Card
+                      titulo={job}
+                      key={`jobItem${job}`}
+                      postulacionClicked={(titulo: string) =>
+                        despostular(titulo)
+                      }
+                      postulado={true}
+                    />
+                  ))}
+                </div>
+              </CardContainer>
+            </div>
           </div>
-        </div>
+        )}
       </main>
     </>
   );
