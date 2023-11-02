@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import React, { useState } from "react";
 import "./Card.css";
 export const Card = (props: any) => {
   const { titulo, postulacionClicked, postulado } = props;
