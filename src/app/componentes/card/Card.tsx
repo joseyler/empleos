@@ -42,6 +42,7 @@ export const Card = (props: any) => {
       >
         {btnPostulacion}
       </button>
+      <img src={`/imagenes/${titulo}.png`} style={{ width: '300px' }} />
       {/* {postulado && <CantidadTomados />} */}
     </div>
   );

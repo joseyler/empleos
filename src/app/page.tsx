@@ -1,12 +1,14 @@
 "use client";
-import { SesionContextProvider } from "./context/SesionContext";
-import { Postulaciones } from "./pages/Postulaciones/Postulaciones";
+import { useEffect } from "react";
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
-
+  const router = useRouter();
+  useEffect(() => {
+    router.push("/ventas");
+  }, []);
+  
   return (
-    <SesionContextProvider>
-        <Postulaciones />
-    </SesionContextProvider>
+    <></>
   );
 }
