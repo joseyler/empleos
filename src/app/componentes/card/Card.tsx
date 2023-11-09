@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import { useState } from "react";
 import "./Card.css";
 export const Card = (props: any) => {
   const { titulo, postulacionClicked, postulado } = props;
@@ -42,7 +42,7 @@ export const Card = (props: any) => {
       >
         {btnPostulacion}
       </button>
-      <img src={`/imagenes/${titulo}.png`} style={{ width: '300px' }} />
+      <img src={`/imagenes/${titulo}.png`} style={{ width: "300px" }} />
       {/* {postulado && <CantidadTomados />} */}
     </div>
   );

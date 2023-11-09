@@ -1,14 +1,25 @@
 "use client";
-import { useEffect } from "react";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const goPage = (e: any) => {
+    router.push(`/${e.target.value}`);
+  };
   const router = useRouter();
-  useEffect(() => {
+  /*  useEffect(() => {
     router.push("/ventas");
-  }, []);
-  
+  }, []); */
+
   return (
-    <></>
+    <>
+      <div>
+        <button onClick={goPage} value={"ventas"}>
+          ventas
+        </button>
+        <button onClick={goPage} value={"clientes"}>
+          clientes
+        </button>
+      </div>
+    </>
   );
 }

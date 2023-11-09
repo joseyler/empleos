@@ -1,22 +1,18 @@
-import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
-import 'bootstrap/dist/css/bootstrap.css';
+import "bootstrap/dist/css/bootstrap.css";
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'Ventas',
-  description: 'Nuestra aplicacion de Ventas',
-}
+  title: "Ventas",
+  description: "Nuestra aplicacion de Ventas",
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
-  return (
-    <html lang="en" className='bg-light'>
-        <body className={inter.className}>{children}</body>
-    </html>
-  )
+  return <section className={inter.className}>{children}</section>;
 }
