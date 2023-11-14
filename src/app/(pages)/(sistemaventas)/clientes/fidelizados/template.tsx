@@ -7,7 +7,7 @@ export default function ClientesTemplate({
 }) {
   return (
     <>
-        <div> Este es el template de clientes, a continuacion se
+        <div> Este es el template de fidelizados, a continuacion se
           dibuja el page.tsx correspondiente al path.
         </div>
         {children}

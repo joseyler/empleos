@@ -1,4 +1,5 @@
 export default interface Municipio {
   id: number,
-  nombre:string
+  nombre:string,
+  venta?:number,
 };

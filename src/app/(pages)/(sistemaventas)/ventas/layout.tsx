@@ -1,22 +1,20 @@
+"use client";
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import 'bootstrap/dist/css/bootstrap.css';
+import { usePathname } from 'next/navigation';
 
-const inter = Inter({ subsets: ['latin'] })
-
-export const metadata: Metadata = {
-  title: 'Ventas',
-  description: 'Nuestra aplicacion de Ventas',
-}
-
-export default function RootLayout({
+export default function VentasLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const path = usePathname();
+
   return (
-    <html lang="en" className='bg-light'>
-        <body className={inter.className}>{children}</body>
-    </html>
+    <div className='bg-info'>
+      <div>En Layout el path es {path}</div>
+        {children}
+    </div>
   )
 }

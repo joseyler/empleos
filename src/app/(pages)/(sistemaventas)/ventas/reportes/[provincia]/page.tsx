@@ -1,19 +1,19 @@
 "use client";
 import { useState, useEffect, useMemo } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import Municipio from '@/app/model/Municipio';
-import { getMunicipiosFromAPI } from '@/app/services/geo';
-import { toast } from 'react-toastify';
-import { Tabla } from '@/app/componentes/Tabla/Tabla';
+import { useRouter, useParams } from 'next/navigation';
 import {
   createColumnHelper,
 } from '@tanstack/react-table';
+import Municipio from '@/app/model/Municipio';
+import { getMunicipiosFromAPI } from '@/app/services/geo';
+import { Tabla } from '@/app/componentes/Tabla/Tabla';
 
 export default function Reporte() {
 
   const router = useRouter();
-  const queryParams = useSearchParams();
+  const params = useParams();
   const [listaMunicipios, seListaMunicipios] = useState<Municipio[]>([]);
+
   
   const navegarAVentas = () => {
     router.push('/ventas');
@@ -30,47 +30,59 @@ export default function Reporte() {
         }
       });
       seListaMunicipios(listaMunicipios);
-      toast.success("Municipios cargados correctamente");
     } catch (error:any) {
-      toast.error(error.message)
+      alert(error.message)
     }
   }
 
   useEffect(() => {
-    const idProvincia = queryParams?.get('provincia');
-    if (idProvincia) {
-      cargarMunicipios(Number(idProvincia));
+    if (params) {
+      cargarMunicipios(Number(params.provincia));
     } else {
-      toast.error('Parametro provincia es requerido');
+      alert('Parametro provincia es requerido');
     }
   }, []);
 
+
   const columnHelper = createColumnHelper<Municipio>()
   const columnas = useMemo<any[]>(() => ([
-
+    columnHelper.accessor('id', {
+      header: 'Identificador',
+    }),
     columnHelper.accessor('nombre', {
       header: 'Nombre',
-      cell: (column) => column.getValue().toUpperCase(),
     }),
     columnHelper.accessor('venta' , {
-      header: 'Las Ventas',
-      cell: (column) => `$ ${column.getValue()?.toFixed(2)}`,
-      footer: () => `$ ${listaMunicipios.reduce((prev, curr) => prev + (curr.venta || 0), 0).toFixed(2)}`,
+      header: 'Ventas',
+      footer: () => listaMunicipios.reduce((prev, curr) => prev + (curr.venta || 0), 0),
     })
   ]), [listaMunicipios]);
+
+
+
+  const muni = {
+    id: 1,
+    nombre: 'Olavarria',
+  }
 
   return (
     <>
       <main>
-        <div className="d-flex flex-row">
+        <div className="d-flex flex-row mt-3">
+          <h1>{muni['nombre']}</h1>
+          <br/>
         <button 
+
           onClick={() => navegarAVentas()}>
           Volver a Ventas
             </button>
         </div>
+        <div className="p-2">
         {listaMunicipios.length > 0 && (
           <Tabla datos={listaMunicipios} columnas={columnas} />
         )}
+      
+    </div>
       </main>
     </>
   );
