@@ -14,7 +14,6 @@ export default function VentasTemplate({
   return (
     <>
       <main>
-        <div>En template el path es {path}</div>
         {children}
       </main>
     </>

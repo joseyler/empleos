@@ -12,8 +12,7 @@ export default function VentasLayout({
   const path = usePathname();
 
   return (
-    <div className='bg-info'>
-      <div>En Layout el path es {path}</div>
+    <div className='bg-white'>
         {children}
     </div>
   )

@@ -3,11 +3,11 @@ import { useState, useEffect, useMemo } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Municipio from '@/app/model/Municipio';
 import { getMunicipiosFromAPI } from '@/app/services/geo';
-import { toast } from 'react-toastify';
 import { Tabla } from '@/app/componentes/Tabla/Tabla';
 import {
   createColumnHelper,
 } from '@tanstack/react-table';
+import { toastError, toastSuccess } from '@/app/utils/toast-utils';
 
 export default function Reporte() {
 
@@ -30,9 +30,9 @@ export default function Reporte() {
         }
       });
       seListaMunicipios(listaMunicipios);
-      toast.success("Municipios cargados correctamente");
+      toastSuccess("Municipios cargados correctamente");
     } catch (error:any) {
-      toast.error(error.message)
+      toastError(error.message)
     }
   }
 
@@ -41,7 +41,7 @@ export default function Reporte() {
     if (idProvincia) {
       cargarMunicipios(Number(idProvincia));
     } else {
-      toast.error('Parametro provincia es requerido');
+      toastError('Parametro provincia es requerido');
     }
   }, []);
 
@@ -51,13 +51,27 @@ export default function Reporte() {
     columnHelper.accessor('nombre', {
       header: 'Nombre',
       cell: (column) => column.getValue().toUpperCase(),
+      
     }),
     columnHelper.accessor('venta' , {
       header: 'Las Ventas',
-      cell: (column) => `$ ${column.getValue()?.toFixed(2)}`,
+      cell: (column) => column.getValue()?.toFixed(2),
       footer: () => `$ ${listaMunicipios.reduce((prev, curr) => prev + (curr.venta || 0), 0).toFixed(2)}`,
     })
   ]), [listaMunicipios]);
+
+  const columnasAttributos = [
+    {
+      cssHeader: 'text-center',
+      cssCell: 'ms-4',
+      cssFooter: '',
+    }, 
+    {
+      cssHeader: 'text-center',
+      cssCell: 'text-end me-4',
+      cssFooter: 'text-end me-4',
+    },
+  ];
 
   return (
     <>
@@ -69,7 +83,11 @@ export default function Reporte() {
             </button>
         </div>
         {listaMunicipios.length > 0 && (
-          <Tabla datos={listaMunicipios} columnas={columnas} />
+          <Tabla 
+            datos={listaMunicipios} 
+            columnas={columnas} 
+            className="table-dark"
+            columnasAttributos={columnasAttributos} />
         )}
       </main>
     </>
